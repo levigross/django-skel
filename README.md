@@ -1,1 +1,4 @@
-What I use for my Django Projects
+Django Project Starter
+===============
+
+Usage: `django-admin.py startproject --template=https://github.com/levigross/django-skel/zipball/master project_name`
