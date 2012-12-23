@@ -3,4 +3,3 @@ cssmin==0.1.4
 gevent
 gunicorn
 jsmin==2.0.2
-psycopg2
