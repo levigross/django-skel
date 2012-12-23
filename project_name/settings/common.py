@@ -231,9 +231,11 @@ JINJA2_TEMPLATE_LOADERS = (
 TEMPLATE_LOADERS = (
     'coffin.template.loaders.Loader',
     )
+
 # Enable Django Admin App
 JINJA2_DISABLED_TEMPLATES = (
     'admin',
+    'debug_toolbar',
     )
 
 from jinja2 import StrictUndefined

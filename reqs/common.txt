@@ -7,3 +7,4 @@ jinja2
 git+https://github.com/GaretJax/coffin.git
 django-extensions
 django-crispy-forms
+Werkzeug
