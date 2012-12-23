@@ -179,6 +179,7 @@ THIRD_PARTY_APPS = (
     # Database migration helpers:
     'south',
     'crispy_forms',
+    'django_extensions'
     )
 
 LOCAL_APPS = (
