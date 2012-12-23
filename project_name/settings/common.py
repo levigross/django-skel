@@ -178,6 +178,7 @@ DJANGO_APPS = (
 THIRD_PARTY_APPS = (
     # Database migration helpers:
     'south',
+    'crispy_forms',
     )
 
 LOCAL_APPS = (
@@ -215,6 +216,9 @@ LOGGING = {
 WSGI_APPLICATION = 'wsgi.application'
 ########## END WSGI CONFIGURATION
 
+########## FORM SETTINGS
+CRISPY_TEMPLATE_PACK = 'bootstrap' #Dfault to bootstrap
+
 ########## TEMPLATE CONFIG
 #We use Jinja2 and a fork of coffin https://github.com/GaretJax/coffin
 
@@ -235,4 +239,4 @@ from jinja2 import StrictUndefined
 JINJA2_ENVIRONMENT_OPTIONS = {
     'autoescape': True, # Django default
     'undefined': StrictUndefined,
-    }
+}
