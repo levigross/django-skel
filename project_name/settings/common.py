@@ -1,11 +1,8 @@
 """Common settings and globals."""
 
-
 from datetime import timedelta
 from os.path import abspath, basename, dirname, join, normpath
 from sys import path
-
-from djcelery import setup_loader
 
 
 ########## PATH CONFIGURATION
@@ -37,7 +34,7 @@ TEMPLATE_DEBUG = DEBUG
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = (
     ('Your Name', 'your_email@example.com'),
-)
+    )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = ADMINS
@@ -61,7 +58,7 @@ DATABASES = {
 
 ########## GENERAL CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#time-zone
-TIME_ZONE = 'America/Los_Angeles'
+TIME_ZONE = 'UTC'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#language-code
 LANGUAGE_CODE = 'en-us'
@@ -96,14 +93,14 @@ STATIC_URL = '/static/'
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
 STATICFILES_DIRS = (
     normpath(join(DJANGO_ROOT, 'assets')),
-)
+    )
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
-)
+    )
 ########## END STATIC FILE CONFIGURATION
 
 
@@ -117,7 +114,7 @@ SECRET_KEY = r"{{ secret_key }}"
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-FIXTURE_DIRS
 FIXTURE_DIRS = (
     normpath(join(DJANGO_ROOT, 'fixtures')),
-)
+    )
 ########## END FIXTURE CONFIGURATION
 
 
@@ -132,34 +129,25 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.tz',
     'django.contrib.messages.context_processors.messages',
     'django.core.context_processors.request',
-)
-
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#template-loaders
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-)
+    )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
 TEMPLATE_DIRS = (
     normpath(join(DJANGO_ROOT, 'templates')),
-)
+    )
 ########## END TEMPLATE CONFIGURATION
 
 
 ########## MIDDLEWARE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#middleware-classes
 MIDDLEWARE_CLASSES = (
-    # Use GZip compression to reduce bandwidth.
-    'django.middleware.gzip.GZipMiddleware',
-
     # Default Django middleware.
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-)
+    )
 ########## END MIDDLEWARE CONFIGURATION
 
 
@@ -185,18 +173,12 @@ DJANGO_APPS = (
     # Admin panel and documentation:
     'django.contrib.admin',
     'django.contrib.admindocs',
-)
+    )
 
 THIRD_PARTY_APPS = (
     # Database migration helpers:
     'south',
-
-    # Static file management:
-    'compressor',
-
-    # Asynchronous task queue:
-    'djcelery',
-)
+    )
 
 LOCAL_APPS = (
 )
@@ -228,32 +210,29 @@ LOGGING = {
 ########## END LOGGING CONFIGURATION
 
 
-########## CELERY CONFIGURATION
-# See: http://celery.readthedocs.org/en/latest/configuration.html#celery-task-result-expires
-CELERY_TASK_RESULT_EXPIRES = timedelta(minutes=30)
-
-# See: http://celery.github.com/celery/django/
-setup_loader()
-########## END CELERY CONFIGURATION
-
-
 ########## WSGI CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
 WSGI_APPLICATION = 'wsgi.application'
 ########## END WSGI CONFIGURATION
 
+########## TEMPLATE CONFIG
+#We use Jinja2 and a fork of coffin https://github.com/GaretJax/coffin
 
-########## COMPRESSION CONFIGURATION
-# See: http://django_compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_ENABLED
-COMPRESS_ENABLED = True
+JINJA2_TEMPLATE_LOADERS = (
+    'django.template.loaders.app_directories.Loader',
+    'django.template.loaders.filesystem.Loader',
+    )
 
-# See: http://django_compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_CSS_FILTERS
-COMPRESS_CSS_FILTERS = [
-    'compressor.filters.template.TemplateFilter',
-]
+TEMPLATE_LOADERS = (
+    'coffin.template.loaders.Loader',
+    )
+# Enable Django Admin App
+JINJA2_DISABLED_TEMPLATES = (
+    'admin',
+    )
 
-# See: http://django_compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_JS_FILTERS
-COMPRESS_JS_FILTERS = [
-    'compressor.filters.template.TemplateFilter',
-]
-########## END COMPRESSION CONFIGURATION
+from jinja2 import StrictUndefined
+JINJA2_ENVIRONMENT_OPTIONS = {
+    'autoescape': True, # Django default
+    'undefined': StrictUndefined,
+    }

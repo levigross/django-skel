@@ -1,5 +1,6 @@
 from django.contrib import admin
-from django.conf.urls.defaults import patterns, include, url
+from django.conf.urls import patterns, include, url
+from coffin.conf.urls.defaults import *
 
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/admin/#hooking-adminsite-instances-into-your-urlconf
